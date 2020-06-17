@@ -1,23 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import Scheme from './Scheme.js'
 import './App.css';
 
 function App() {
+  const [data, setData] = useState([
+  {
+    id: "rect1",
+    color: "yellow",
+    name: "Block 1"
+  },
+  {
+    id: "rect2",
+    color: "red",
+    name: "Block 2"
+  },
+  {
+    id: "rect3",
+    color: "green",
+    name: "Block 3"
+  }]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      data[0].color = "blue";
+      data[2].color = "yellow";
+      setData([
+        ...data,
+      ]);
+
+    }, 5000);
+  });
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+
+        <Scheme rects={data} />
+
       </header>
     </div>
   );
