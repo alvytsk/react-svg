@@ -8,6 +8,10 @@ const Scheme = ({ rects }) => {
         console.log( {id} , { name } )
     ));
 
+    function onClickHandler(name) {
+        console.log('clicked: ' + name);
+    }
+
     return(
         <SvgLoader path={ scheme } className="svgSchema">            
             { rects.map( ({id, color}) => (
@@ -15,6 +19,7 @@ const Scheme = ({ rects }) => {
                     key={ id }
                     selector={"#" + id }
                     fill={ color }
+                    onClick={(id) => {onClickHandler({id})}}
                 />
             ))}
             { rects.map( ({ id, name, i }) => (

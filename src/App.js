@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Scheme from './Scheme.js'
+import Gnss from './Components/Gnss/Gnss'
 import './App.css';
 
 function App() {
@@ -36,7 +37,8 @@ function App() {
     <div className="App">
       <header className="App-header">
 
-        <Scheme rects={data} />
+        {/* <Scheme rects={data} /> */}
+        <Gnss />
 
       </header>
     </div>
