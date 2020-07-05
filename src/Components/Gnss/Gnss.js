@@ -1,11 +1,15 @@
 import React from 'react';
 import SystemList from './SystemList'
-import { Button } from 'antd';
 
 class Gnss extends React.Component {
   state = {
     Systems : {},
-    StandingPoint: {}
+    StandingPoint: {},
+    Parameters: {},
+    fetching: {
+      inProgress: true,
+      status: ""
+    }
   }
 
   componentDidMount() {
@@ -37,23 +41,29 @@ class Gnss extends React.Component {
           in_view: Math.floor((Math.random() * max) + min)
         }
       },
-      BAIDU: {
-        use: true,
-        satellites: {
-          in_use: Math.floor((Math.random() * max) + min),
-          in_view: 9
-        }
-      }
+      // BAIDU: {
+      //   use: true,
+      //   satellites: {
+      //     in_use: Math.floor((Math.random() * max) + min),
+      //     in_view: 9
+      //   }
+      // }
     }
-    this.setState({...this.state, Systems});
+    this.setState({Systems: Systems});
     // console.log(this.state);
+  }
+
+  changeSystem = (checked, event) => {
+    console.log(checked, event);
+    var glonass = {...this.state.Systems}
+    glonass.GLONASS.use = {checked};
+    this.setState({glonass})
   }
 
   render() {
     return (
       <div>
-        <SystemList systems={this.state.Systems}/>
-        <Button type="primary">Get data </Button>
+        <SystemList systems={this.state.Systems} changed={(checked, event) => this.changeSystem(checked, event)}/>
       </div>);
   }
 };
