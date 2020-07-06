@@ -1,5 +1,10 @@
 import React from 'react';
 import SystemList from './SystemList'
+import System from './System'
+import Map from './Map'
+import InfoPanel from './InfoPanel'
+import StandingPoint from './StandingPoint'
+import Status from './Status'
 
 class Gnss extends React.Component {
   state = {
@@ -26,6 +31,10 @@ class Gnss extends React.Component {
     const min = 1;
     const max = 30;
 
+    const Parameters = {
+      status: "Normal"
+    }
+
     const Systems = {
       GPS: {
         use: true,
@@ -50,6 +59,7 @@ class Gnss extends React.Component {
       // }
     }
     this.setState({Systems: Systems});
+    this.setState({Parameters: Parameters});
     // console.log(this.state);
   }
 
@@ -63,7 +73,11 @@ class Gnss extends React.Component {
   render() {
     return (
       <div>
+        {/* <InfoPanel /> */}
+        <Status status={this.state.Parameters.status}/>
         <SystemList systems={this.state.Systems} changed={(checked, event) => this.changeSystem(checked, event)}/>
+        <StandingPoint />
+        <Map />
       </div>);
   }
 };
