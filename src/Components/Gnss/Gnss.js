@@ -1,7 +1,7 @@
 import React from 'react';
 import SystemList from './SystemList'
 import System from './System'
-import Map from './Map'
+import OsmMap from './OsmMap'
 import InfoPanel from './InfoPanel'
 import StandingPoint from './StandingPoint'
 import Status from './Status'
@@ -81,8 +81,10 @@ class Gnss extends React.Component {
         {/* <InfoPanel /> */}
         <Status status={this.state.Parameters.status}/>
         <SystemList systems={this.state.Systems} inProgress={this.state.Parameters['InProgress'].includes('Systems')} changed={(checked, event) => this.changeSystem(checked, event)}/>
+        <br /><p/>
         <StandingPoint />
-        <Map />
+        <br /><p/>
+        <OsmMap />
       </div>);
   }
 };
