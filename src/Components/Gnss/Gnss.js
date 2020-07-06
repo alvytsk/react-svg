@@ -10,11 +10,9 @@ class Gnss extends React.Component {
   state = {
     Systems : {},
     StandingPoint: {},
-    Parameters: {},
-    fetching: {
-      inProgress: true,
-      status: ""
-    }
+    Parameters: {
+      InProgress: []
+    },
   }
 
   componentDidMount() {
@@ -32,7 +30,9 @@ class Gnss extends React.Component {
     const max = 30;
 
     const Parameters = {
-      status: "Normal"
+      ...this.state.Parameters,
+      status: "Normal",
+      InProgress: []
     }
 
     const Systems = {
@@ -65,9 +65,14 @@ class Gnss extends React.Component {
 
   changeSystem = (checked, event) => {
     console.log(checked, event);
-    var glonass = {...this.state.Systems}
+    var glonass = {...this.state.Systems};
     glonass.GLONASS.use = {checked};
-    this.setState({glonass})
+    this.setState({glonass});
+
+    var params = {...this.state.Parameters};
+    params['InProgress'].push("Systems");
+    params.status = "Warning";
+    this.setState({params});
   }
 
   render() {
@@ -75,7 +80,7 @@ class Gnss extends React.Component {
       <div>
         {/* <InfoPanel /> */}
         <Status status={this.state.Parameters.status}/>
-        <SystemList systems={this.state.Systems} changed={(checked, event) => this.changeSystem(checked, event)}/>
+        <SystemList systems={this.state.Systems} inProgress={this.state.Parameters['InProgress'].includes('Systems')} changed={(checked, event) => this.changeSystem(checked, event)}/>
         <StandingPoint />
         <Map />
       </div>);

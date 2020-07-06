@@ -1,13 +1,15 @@
 import React from 'react';
-import { Skeleton, Switch, Card, Statistic, Row, Col, Typography } from 'antd';
+import { Alert, Switch, Card, Statistic, Row, Col, Typography } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 const { Meta } = Card;
 
-const SystemList = ({systems, changed}) => {
+const SystemList = ({systems, inProgress, changed}) => {
 
     const cards = [];
+
+    console.log(inProgress);
   
     Object.entries(systems).map(
         ([key, value], index) => {
@@ -19,12 +21,13 @@ const SystemList = ({systems, changed}) => {
                 checkedChildren={<CheckOutlined />}
                 unCheckedChildren={<CloseOutlined />}
                 checked = { value.use }
-                onClick={ changed }
+                onClick = { changed }
+                loading = { inProgress } 
               />);
 
             const card =  
                 (
-                    <Card  title={key} bordered={true} type="inner" extra={using} style={{ marginTop: 20 }}>
+                    <Card title={key} bordered={true} type="inner" extra={using} style={{ marginTop: 20 }}>
                         <Meta title="Satellites" />
                         <Statistic title="In Use / In View" value={satellites} />
                     </Card>
@@ -38,8 +41,22 @@ const SystemList = ({systems, changed}) => {
         }
     )
 
+    const alert = inProgress ? (
+    <Row>
+        <Col span={8} offset={8}>
+            <Alert
+                message="Warning"
+                description="Changing GNSS system in progress"
+                type="warning"
+                showIcon
+            />
+        </Col>
+    </Row>   
+    ) : <div></div>;
+
     return (
         <div>
+            {alert}
             <Row gutter={16} justify="center" align="top">{ cards }</Row>
         </div>
     )
